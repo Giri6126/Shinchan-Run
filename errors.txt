@@ -1,0 +1,1 @@
+src/EnvironmentManager.tsx(191,9): error TS6133: 'outlineThin' is declared but its value is never read.
