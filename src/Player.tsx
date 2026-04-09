@@ -1,9 +1,8 @@
-import { useRef } from 'react'
+import { useRef, useEffect } from 'react'
 import { useFrame } from '@react-three/fiber'
 import * as THREE from 'three'
 import { Outlines } from '@react-three/drei'
 import { useGameStore } from './store'
-import { useKeyPressEvent } from 'react-use'
 
 const LANE_WIDTH = 3
 const JUMP_VELOCITY = 15
@@ -21,15 +20,38 @@ export function Player() {
   
   const { gameState } = useGameStore()
 
-  const moveLeft = () => { if (gameState === 'playing' && targetX.current > -LANE_WIDTH) targetX.current -= LANE_WIDTH }
-  const moveRight = () => { if (gameState === 'playing' && targetX.current < LANE_WIDTH) targetX.current += LANE_WIDTH }
-  const jump = () => { if (gameState === 'playing' && !isJumping.current && !isDucking.current) { velocityY.current = JUMP_VELOCITY; isJumping.current = true; } }
-  const duck = () => { if (gameState === 'playing' && !isJumping.current) { isDucking.current = true; duckTimer.current = 0.8; } }
+  const moveLeft = () => {
+    if (useGameStore.getState().gameState === 'playing' && targetX.current > -LANE_WIDTH) targetX.current -= LANE_WIDTH
+  }
+  const moveRight = () => {
+    if (useGameStore.getState().gameState === 'playing' && targetX.current < LANE_WIDTH) targetX.current += LANE_WIDTH
+  }
+  const jump = () => {
+    if (useGameStore.getState().gameState === 'playing' && !isJumping.current && !isDucking.current) {
+      velocityY.current = JUMP_VELOCITY; isJumping.current = true
+    }
+  }
+  const duck = () => {
+    if (useGameStore.getState().gameState === 'playing' && !isJumping.current) {
+      isDucking.current = true; duckTimer.current = 0.8
+    }
+  }
 
-  useKeyPressEvent('ArrowLeft', moveLeft)
-  useKeyPressEvent('ArrowRight', moveRight)
-  useKeyPressEvent('ArrowUp', jump)
-  useKeyPressEvent('ArrowDown', duck)
+  // Direct window keydown — reliable regardless of canvas focus
+  // Also supports WASD keys
+  useEffect(() => {
+    const handleKey = (e: KeyboardEvent) => {
+      switch (e.key) {
+        case 'ArrowLeft':  case 'a': case 'A': moveLeft();  break
+        case 'ArrowRight': case 'd': case 'D': moveRight(); break
+        case 'ArrowUp':    case 'w': case 'W': case ' ':    jump(); break
+        case 'ArrowDown':  case 's': case 'S':              duck(); break
+      }
+    }
+    window.addEventListener('keydown', handleKey)
+    return () => window.removeEventListener('keydown', handleKey)
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   const characterGroupRef = useRef<THREE.Group>(null)
   const leftArmRef = useRef<THREE.Mesh>(null)

@@ -3,7 +3,6 @@ import { UI } from './UI'
 import { useGameStore } from './store'
 import { Suspense } from 'react'
 import { World } from './World'
-import { SoftShadows } from '@react-three/drei'
 
 export function Game() {
   const gameState = useGameStore(state => state.gameState)
@@ -13,14 +12,11 @@ export function Game() {
 
   return (
     <>
-      <UI />
-      <div className="absolute inset-0 z-0">
-        <Canvas shadows camera={{ position: [0, 5, 10], fov: 60 }}>
+      <div className="absolute inset-0 z-0" style={{ pointerEvents: 'none' }}>
+        <Canvas shadows camera={{ position: [0, 5, 10], fov: 60 }} style={{ pointerEvents: gameState === 'playing' ? 'auto' : 'none' }}>
           {/* Seamless infinite horizon trick: match fog and background color */}
           <color attach="background" args={[skyColor]} />
           <fog attach="fog" args={[skyColor, 40, 90]} />
-          
-          <SoftShadows size={15} samples={10} focus={0.5} />
           
           <ambientLight intensity={0.8} color="#ffffff" />
           <directionalLight
@@ -28,11 +24,11 @@ export function Game() {
             position={[10, 30, 10]}
             intensity={1.0}
             color="#fffbeb"
-            shadow-mapSize={[1024, 1024]}
-            shadow-camera-left={-30}
-            shadow-camera-right={30}
-            shadow-camera-top={30}
-            shadow-camera-bottom={-30}
+            shadow-mapSize={[512, 512]}
+            shadow-camera-left={-20}
+            shadow-camera-right={20}
+            shadow-camera-top={20}
+            shadow-camera-bottom={-20}
             shadow-bias={-0.0001}
           />
           
@@ -41,6 +37,7 @@ export function Game() {
           </Suspense>
         </Canvas>
       </div>
+      <UI />
     </>
   )
 }
