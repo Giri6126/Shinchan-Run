@@ -1,1 +1,5 @@
+<<<<<<< HEAD
 src/EnvironmentManager.tsx(191,9): error TS6133: 'outlineThin' is declared but its value is never read.
+=======
+src/EnvironmentManager.tsx(191,9): error TS6133: 'outlineThin' is declared but its value is never read.
+>>>>>>> 24acccc60dd13983f27a11f414ca1bf227551aa5
