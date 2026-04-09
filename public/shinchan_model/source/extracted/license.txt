@@ -1,0 +1,11 @@
+Model Information:
+* title:	Shin Chan
+* source:	https://sketchfab.com/3d-models/shin-chan-4017fc4184ef4c2782a0231113258a17
+* author:	Naashit_Ahmad (https://sketchfab.com/Naashit_Ahmad)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Shin Chan" (https://sketchfab.com/3d-models/shin-chan-4017fc4184ef4c2782a0231113258a17) by Naashit_Ahmad (https://sketchfab.com/Naashit_Ahmad) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
